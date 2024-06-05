@@ -1,6 +1,7 @@
 # ハッカソン出場作品(フロントエンド・再作成中)
 NextJSを使用して作成していた物を、Reactを使用して再作成中。
 プルリクエストをしてからCIを回して問題検出をできるようにしています。
+参考資料：https://drive.google.com/file/d/1PFX1IzgGvnPmJ_PXNTAsNG9kamCsgmbB/view?usp=drive_link
 
 # React + TypeScript + Vite
 
