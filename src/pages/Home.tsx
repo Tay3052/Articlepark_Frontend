@@ -3,6 +3,7 @@ import dummyUser from "../assets/images/image.png";
 import { Heading, Text, Button } from "@yamada-ui/react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
 interface Sample {
   id: number;
@@ -13,6 +14,7 @@ interface Sample {
 }
 
 export const Home: React.FC = () => {
+  const { isSignedIn } = useAuth();
   const [archicles] = useState<Sample[]>([
     { id: 1, title: "Point1", summary: "This is point1", icon: dummyUser, url: "/" },
     { id: 2, title: "Point2", summary: "This is point2", icon: dummyUser, url: "/" },
@@ -23,7 +25,7 @@ export const Home: React.FC = () => {
     <>
       <main>
         <Bg>
-          <Title>Article Park</Title>
+          <Title size={"4xl"}>Article Park</Title>
           <SubTitleDiv>
             <SubTitle>
               問題作成で、
@@ -45,9 +47,9 @@ export const Home: React.FC = () => {
             ))}
           </PointDiv>
           <StartButtonDiv>
-            <StartButton>
-              <Link to={`/mypage`}>はじめる</Link>
-            </StartButton>
+            <Button>
+              {isSignedIn ?? false ? <Link to={`/pickup`}>はじめる</Link> : "未ログイン"}
+            </Button>
           </StartButtonDiv>
         </Bg>
       </main>
@@ -63,8 +65,7 @@ const Bg = styled.div`
     `;
 
 const Title = styled(Heading)`
-    font-weight: bold;
-    font-size: 4rem;
+
     margin :40px 0 0 80px
     `;
 
@@ -95,12 +96,13 @@ const Icons = styled.img`
     width: 50%
   `;
 
-const ArticlePoints = styled.h2`
+const ArticlePoints = styled(Text)`
     color: #CA841C;
     margin: 0 0 10px 0;
+    font-size: 2rem;
   `;
 
-const ArticleSummary = styled.h3`
+const ArticleSummary = styled(Text)`
     font-weight: bold;
   `;
 
@@ -109,11 +111,3 @@ const StartButtonDiv = styled.div`
     justify-content: flex-end;
     margin: 100px 80px 0 0;
     `;
-
-const StartButton = styled(Button)`
-    font-size: 2rem;
-    border-radius: 20px;
-    background-color: gray;
-    padding: 5px 30px;
-    color: white;
-  `;

@@ -1,8 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import styled from "styled-components";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, UserButton, useAuth } from "@clerk/clerk-react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export const Header: React.FC = () => {
+  const { isSignedIn } = useAuth();
+
   return (
     <>
       <Bg>
@@ -16,6 +19,11 @@ export const Header: React.FC = () => {
               <User />
             </SignedIn>
           </SigninDiv>
+          {(isSignedIn ?? false) && (
+            <Link to="mypage">
+              <AccountIcon fontSize="large" />
+            </Link>
+          )}
         </Navigate>
       </Bg>
       <Outlet />
@@ -23,14 +31,18 @@ export const Header: React.FC = () => {
   );
 };
 
+const AccountIcon = styled(AccountCircleIcon)`
+    margin: 0 40px 0 0px;`;
+
 const Bg = styled.header`
     background-color: #D9D9D9;
     position: fixed;
     top: 0;
-    margin:0 0 40px 0;
+    margin: 0 0 100px 0;
     width: 100%;
     height: 4rem;
-    margin-bottom: 1rem;`;
+    margin-bottom: 1rem;
+    z-index: 100;`;
 
 const Logo = styled.h1`
     font-size: 2rem;
